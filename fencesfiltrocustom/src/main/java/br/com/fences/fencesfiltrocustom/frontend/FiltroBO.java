@@ -3,6 +3,7 @@ package br.com.fences.fencesfiltrocustom.frontend;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import br.com.fences.fencesfiltrocustom.simples.FiltroCondicao;
 import br.com.fences.fencesfiltrocustom.simples.TipoFiltro;
 import br.com.fences.fencesfiltrocustom.simples.TipoPesquisaTexto;
 import br.com.fences.fencesutils.conversor.converter.Converter;
+import br.com.fences.fencesutils.formatar.FormatarData;
 import br.com.fences.fencesutils.rest.tratamentoerro.util.VerificarErro;
 import br.com.fences.fencesutils.verificador.Verificador;
 import br.com.fences.ocorrenciaentidade.ocorrencia.Ocorrencia;
@@ -42,8 +44,8 @@ public class FiltroBO implements Serializable{
 	
 	private static final long serialVersionUID = 6343587360472833456L;
 	
-	@Inject
-	private transient Logger logger;
+	//@Inject
+	private transient Logger logger = Logger.getLogger(FiltroBO.class);
 	
 	//@Inject
 	//private AppConfig appConfig;
@@ -93,18 +95,18 @@ public class FiltroBO implements Serializable{
 			
 			
 			//--- LISTA_SELECAO_UNICA
-//			{
-//				FiltroModelo anoBo = new FiltroModelo();
-//				anoBo.setRotulo("Ano");
-//				anoBo.setTipo(TipoFiltro.LISTA_SELECAO_UNICA);
-//				anoBo.setInformativo("Ano da ocorrência");
-//				anoBo.setAtributoDePesquisa("ANO_BO");
-//				anoBo.setListaSelecaoUnicaFonte("/ocorrenciaespelhobackend/rest/espelhoOcorrencia/listarAnosMap");
-//			
-//				Map<String, String> anos = chamarServicoFonteParaMap(anoBo.getListaSelecaoUnicaFonte());
-//				anoBo.setListaSelecaoUnica(anos);
-//				filtros.add(anoBo);
-//			}
+			{
+				FiltroModelo anoBo = new FiltroModelo();
+				anoBo.setRotulo("Ano");
+				anoBo.setTipo(TipoFiltro.LISTA_SELECAO_UNICA);
+				anoBo.setInformativo("Ano da ocorrência");
+				anoBo.setAtributoDePesquisa("ANO_BO");
+				anoBo.setListaSelecaoUnicaFonte("/deicdivecarbackend/rest/rouboCarga/listarAnosMap");
+			
+				Map<String, String> anos = chamarServicoFonteParaMap(anoBo.getListaSelecaoUnicaFonte());
+				anoBo.setListaSelecaoUnica(anos);
+				filtros.add(anoBo);
+			}
 			
 			//--- LISTA_SELECAO_UNICA - manual
 			{
@@ -144,41 +146,41 @@ public class FiltroBO implements Serializable{
 			}
 			
 			//--- LISTA_SELECAO_UNICA - dinamica
-//			{
-//				FiltroModelo delegacia = new FiltroModelo();
-//				delegacia.setRotulo("Delegacia");
-//				delegacia.setTipo(TipoFiltro.LISTA_SELECAO_UNICA);
-//				delegacia.setInformativo("Delegacia de registro da ocorrência");
-//				delegacia.setAtributoDePesquisa("ID_DELEGACIA");
-//				delegacia.setListaSelecaoUnicaFonte("/ocorrenciaespelhobackend/rest/espelhoOcorrencia/listarDelegacias");
-//				
-//				Map<String, String> delegacias = chamarServicoFonteParaMap(delegacia.getListaSelecaoUnicaFonte());
-//				delegacia.setListaSelecaoUnica(delegacias);
-//				filtros.add(delegacia);
-//			}
+			{
+				FiltroModelo delegacia = new FiltroModelo();
+				delegacia.setRotulo("Delegacia");
+				delegacia.setTipo(TipoFiltro.LISTA_SELECAO_UNICA);
+				delegacia.setInformativo("Delegacia de registro da ocorrência");
+				delegacia.setAtributoDePesquisa("ID_DELEGACIA");
+				delegacia.setListaSelecaoUnicaFonte("/deicdivecarbackend/rest/rouboCarga/listarDelegacias");
+				
+				Map<String, String> delegacias = chamarServicoFonteParaMap(delegacia.getListaSelecaoUnicaFonte());
+				delegacia.setListaSelecaoUnica(delegacias);
+				filtros.add(delegacia);
+			}
 			
 			
 			//--- INTERVALO_DATA
-//			{
-//				FiltroModelo dataRegistro = new FiltroModelo();
-//				dataRegistro.setRotulo("Data de registro");
-//				dataRegistro.setTipo(TipoFiltro.INTERVALO_DATA);
-//				dataRegistro.setInformativo("Data de registro da ocorrência");
-//				dataRegistro.setAtributoDePesquisa("DATAHORA_REGISTRO_BO");
-//				dataRegistro.setIntervaloDataInicialMinimoFonte("/ocorrenciaespelhobackend/rest/espelhoOcorrencia/pesquisarPrimeiraDataRegistro");
-//				dataRegistro.setIntervaloDataFinalMaximoFonte("/ocorrenciaespelhobackend/rest/espelhoOcorrencia/pesquisarUltimaDataRegistro");
-//				
-//				String minimoOriginal = chamarServicoFonteParaString(dataRegistro.getIntervaloDataInicialMinimoFonte());
-//				String maximoOriginal = chamarServicoFonteParaString(dataRegistro.getIntervaloDataFinalMaximoFonte());
-//				
-//				Date minimoFormatado = FormatarData.getAnoMesDiaHoraMinutoSegundoConcatenados().parse(minimoOriginal);
-//				Date maximoFormatado = FormatarData.getAnoMesDiaHoraMinutoSegundoConcatenados().parse(maximoOriginal);
-//				
-//				dataRegistro.setIntervaloDataInicialMinimo(FormatarData.getDiaMesAnoComBarras().format(minimoFormatado));
-//				dataRegistro.setIntervaloDataFinalMaximo(FormatarData.getDiaMesAnoComBarras().format(maximoFormatado));
-//				
-//				filtros.add(dataRegistro);
-//			}
+			{
+				FiltroModelo dataRegistro = new FiltroModelo();
+				dataRegistro.setRotulo("Data de registro");
+				dataRegistro.setTipo(TipoFiltro.INTERVALO_DATA);
+				dataRegistro.setInformativo("Data de registro da ocorrência");
+				dataRegistro.setAtributoDePesquisa("DATAHORA_REGISTRO_BO");
+				dataRegistro.setIntervaloDataInicialMinimoFonte("/deicdivecarbackend/rest/rouboCarga/pesquisarPrimeiraDataRegistro");
+				dataRegistro.setIntervaloDataFinalMaximoFonte("/deicdivecarbackend/rest/rouboCarga/pesquisarUltimaDataRegistro");
+				
+				String minimoOriginal = chamarServicoFonteParaString(dataRegistro.getIntervaloDataInicialMinimoFonte());
+				String maximoOriginal = chamarServicoFonteParaString(dataRegistro.getIntervaloDataFinalMaximoFonte());
+				
+				Date minimoFormatado = FormatarData.getAnoMesDiaHoraMinutoSegundoConcatenados().parse(minimoOriginal);
+				Date maximoFormatado = FormatarData.getAnoMesDiaHoraMinutoSegundoConcatenados().parse(maximoOriginal);
+				
+				dataRegistro.setIntervaloDataInicialMinimo(FormatarData.getDiaMesAnoComBarras().format(minimoFormatado));
+				dataRegistro.setIntervaloDataFinalMaximo(FormatarData.getDiaMesAnoComBarras().format(maximoFormatado));
+				
+				filtros.add(dataRegistro);
+			}
 			
 			//--- LISTA_SELECAO_UNICA - NATUREZA
 			{
@@ -198,25 +200,25 @@ public class FiltroBO implements Serializable{
 			}
 			
 			//--- ARVORE NATUREZA
-//			{
-//				FiltroModelo arvore = new FiltroModelo();
-//				arvore.setAtivo(false);
-//				arvore.setRotulo("Natureza (hierarquia)");
-//				arvore.setTipo(TipoFiltro.ARVORE);
-//				arvore.setInformativo("Hierarquia de naturezas");
-//				arvore.setAtributoDePesquisa("NATUREZA");
-//				arvore.setArvoreFonte("/ocorrenciaespelhobackend/rest/espelhoOcorrencia/listarNaturezasArvore");
-//				arvore.setArvoreSelecionaFilhos(false);
-//				
-//				ArvoreSimples arvoreSimples = chamarServicoFonteParaArvoreSimples(arvore.getArvoreFonte());
-//				
-//				TreeNode arvorePrime = filtroArvoreConverter.converterArvoreSimplesParaArvorePrime(arvoreSimples, null, false, false);
-//				
-//				configurarTipoElementoArvore(arvorePrime);
-//				arvore.setArvoreRaiz(arvorePrime);
-//				
-//				filtros.add(arvore);
-//			}
+			{
+				FiltroModelo arvore = new FiltroModelo();
+				arvore.setAtivo(false);
+				arvore.setRotulo("Natureza (hierarquia)");
+				arvore.setTipo(TipoFiltro.ARVORE);
+				arvore.setInformativo("Hierarquia de naturezas");
+				arvore.setAtributoDePesquisa("NATUREZA");
+				arvore.setArvoreFonte("/deicdivecarbackend/rest/rouboCarga/listarNaturezasArvore");
+				arvore.setArvoreSelecionaFilhos(false);
+				
+				ArvoreSimples arvoreSimples = chamarServicoFonteParaArvoreSimples(arvore.getArvoreFonte());
+				
+				TreeNode arvorePrime = filtroArvoreConverter.converterArvoreSimplesParaArvorePrime(arvoreSimples, null, false, false);
+				
+				configurarTipoElementoArvore(arvorePrime);
+				arvore.setArvoreRaiz(arvorePrime);
+				
+				filtros.add(arvore);
+			}
 			
 			//--- TEXTO - historico
 			{
@@ -232,23 +234,23 @@ public class FiltroBO implements Serializable{
 			
 
 			//--- ARVORE
-//			{
-//				FiltroModelo arvore = new FiltroModelo();
-//				arvore.setRotulo("Objeto > Tipo");
-//				arvore.setTipo(TipoFiltro.ARVORE);
-//				arvore.setInformativo("Hierarquia de tipo de objeto");
-//				arvore.setAtributoDePesquisa("OBJETO.ID_TIPO_OBJETO|OBJETO.ID_SUBTIPO_OBJETO");
-//				arvore.setArvoreFonte("/ocorrenciaespelhobackend/rest/espelhoOcorrencia/listarTipoObjetosArvore");
-//				
-//				ArvoreSimples arvoreSimples = chamarServicoFonteParaArvoreSimples(arvore.getArvoreFonte());
-//				
-//				TreeNode arvorePrime = filtroArvoreConverter.converterArvoreSimplesParaArvorePrime(arvoreSimples, null, false, false);
-//				
-//				configurarTipoElementoArvore(arvorePrime);
-//				arvore.setArvoreRaiz(arvorePrime);
-//				
-//				filtros.add(arvore);
-//			}			
+			{
+				FiltroModelo arvore = new FiltroModelo();
+				arvore.setRotulo("Objeto > Tipo");
+				arvore.setTipo(TipoFiltro.ARVORE);
+				arvore.setInformativo("Hierarquia de tipo de objeto");
+				arvore.setAtributoDePesquisa("OBJETO.ID_TIPO_OBJETO|OBJETO.ID_SUBTIPO_OBJETO");
+				arvore.setArvoreFonte("/deicdivecarbackend/rest/rouboCarga/listarTipoObjetosArvore");
+				
+				ArvoreSimples arvoreSimples = chamarServicoFonteParaArvoreSimples(arvore.getArvoreFonte());
+				
+				TreeNode arvorePrime = filtroArvoreConverter.converterArvoreSimplesParaArvorePrime(arvoreSimples, null, false, false);
+				
+				configurarTipoElementoArvore(arvorePrime);
+				arvore.setArvoreRaiz(arvorePrime);
+				
+				filtros.add(arvore);
+			}			
 			
 
 			//--- TEXTO - objeto > imei
@@ -274,18 +276,18 @@ public class FiltroBO implements Serializable{
 			}			
 			
 			//--- LISTA_SELECAO_UNICA - pessoa > tipo de pessoa
-//			{
-//				FiltroModelo tipoPessoa = new FiltroModelo();
-//				tipoPessoa.setRotulo("Pessoa > Tipo");
-//				tipoPessoa.setTipo(TipoFiltro.LISTA_SELECAO_UNICA);
-//				tipoPessoa.setInformativo("Tipo da pessoa");
-//				tipoPessoa.setAtributoDePesquisa("PESSOA.ID_TIPO_PESSOA");
-//				tipoPessoa.setListaSelecaoUnicaFonte("/ocorrenciaespelhobackend/rest/espelhoOcorrencia/listarTipoPessoas");
-//				
-//				Map<String, String> tipos = chamarServicoFonteParaMap(tipoPessoa.getListaSelecaoUnicaFonte());
-//				tipoPessoa.setListaSelecaoUnica(tipos);
-//				filtros.add(tipoPessoa);
-//			}			
+			{
+				FiltroModelo tipoPessoa = new FiltroModelo();
+				tipoPessoa.setRotulo("Pessoa > Tipo");
+				tipoPessoa.setTipo(TipoFiltro.LISTA_SELECAO_UNICA);
+				tipoPessoa.setInformativo("Tipo da pessoa");
+				tipoPessoa.setAtributoDePesquisa("PESSOA.ID_TIPO_PESSOA");
+				tipoPessoa.setListaSelecaoUnicaFonte("/deicdivecarbackend/rest/rouboCarga/listarTipoPessoas");
+				
+				Map<String, String> tipos = chamarServicoFonteParaMap(tipoPessoa.getListaSelecaoUnicaFonte());
+				tipoPessoa.setListaSelecaoUnica(tipos);
+				filtros.add(tipoPessoa);
+			}			
 			   
 			//--- TEXTO - veiculo > placa
 			{
@@ -353,7 +355,7 @@ public class FiltroBO implements Serializable{
 	}
 	
 	//--
-	public List<Ocorrencia> pesquisarLazy(final List<FiltroCondicao> filtroCondicoes, final int primeiroRegistro, final int registrosPorPagina)
+	public List<Ocorrencia> pesquisarLazy(List<FiltroCondicao> filtroCondicoes, final int primeiroRegistro, final int registrosPorPagina)
 	{
 		List<Ocorrencia> ocorrencias = new ArrayList<>();
 		
@@ -381,7 +383,7 @@ public class FiltroBO implements Serializable{
 	    return ocorrencias;
 	}   
 	
-	public int contar(final List<FiltroCondicao> filtroCondicoes)
+	public int contar(List<FiltroCondicao> filtroCondicoes)
 	{
 		
 		Type collectionType = new TypeToken<List<FiltroCondicao>>(){}.getType();
